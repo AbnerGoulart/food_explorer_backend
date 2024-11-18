@@ -14,7 +14,7 @@ class DishesController {
                   {
                       "photo": "/salada2.png",
                       "title": "Salada Italiana",
-                      "price": 29.90,
+                      "price": 28.40,
                       "description": "Tomates frescos, queijo mozzarella e manjericão com azeite extra virgem.",
                       "id": 2
                   },
