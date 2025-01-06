@@ -1,10 +1,16 @@
 const { Router } = require('express')
+const DetailsController = require('../controllers/DetailsController')
+const DishesController = require("../controllers/DishesController")
+const SessionController = require("../controllers/SessionController")
 
 const routes = Router()
 
-DishesController = require("../controllers/DishesController")
-dishesController = new DishesController()
+const dishesController = new DishesController()
+const detailsController = new DetailsController()
+const sessionController = new SessionController()
 
 routes.get('/dishes', dishesController.get)
+routes.get('/dishes/details/:id', detailsController.get)
+routes.post('/session', sessionController.create)
 
 module.exports = routes
