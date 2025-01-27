@@ -1,5 +1,6 @@
 class SessionController {
   async create (request, response) {
+    console.log(request)
     if(request.body.email === "abner@email.com" && request.body.password === "1234"){
       return response.status(200).json({user: "Abner", token: "apsodksfgk", type:"client"})
     } else if(request.body.email === "admin@email.com" && request.body.password === "1234"){

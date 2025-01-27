@@ -10,6 +10,7 @@ const detailsController = new DetailsController()
 const sessionController = new SessionController()
 
 routes.get('/dishes', dishesController.get)
+routes.post('/dishes', dishesController.create)
 routes.get('/dishes/details/:id', detailsController.get)
 routes.post('/session', sessionController.create)
 
