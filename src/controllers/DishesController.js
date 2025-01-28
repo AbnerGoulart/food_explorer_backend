@@ -20,7 +20,6 @@ class DishesController {
 
             if (responseData[dish.section] != undefined) {  
                 responseData[dish.section]["data"].push(data)
-                responseData[dish.section]["data"].push(data)
             } else {
                 responseData[dish.section] = {
                   title: dish.section_title,
