@@ -15,7 +15,8 @@ class DishesController {
                 photo: dish.photo,
                 title: dish.title,
                 price: dish.price,
-                description: dish.description
+                description: dish.description,
+                id: dish.id
             }
 
             if (responseData[dish.section] != undefined) {  
