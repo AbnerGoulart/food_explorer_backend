@@ -1,5 +1,13 @@
 insert into
-    dishes (title, description, photo, price, section, section_title)
+    dishes (
+        title,
+        description,
+        photo,
+        price,
+        section,
+        section_title,
+        enabled
+    )
 values
     -- Meals
     (
@@ -8,7 +16,8 @@ values
         "strogonoff_frango.png",
         32.9,
         "meals",
-        "Refeições"
+        "Refeições",
+        1
     ),
     (
         "Panqueca de Carne",
@@ -16,7 +25,8 @@ values
         "panqueca_carne.png",
         27.9,
         "meals",
-        "Refeições"
+        "Refeições",
+        1
     ),
     (
         "Camarão ao Alho e Óleo",
@@ -24,7 +34,8 @@ values
         "camarao_alho_oleo.png",
         39.9,
         "meals",
-        "Refeições"
+        "Refeições",
+        1
     ),
     -- Main Dishes
     (
@@ -33,7 +44,8 @@ values
         "picanha_grelhada.png",
         59.9,
         "main_dishes",
-        "Pratos Principais"
+        "Pratos Principais",
+        1
     ),
     (
         "Tilápia ao Molho de Ervas",
@@ -41,7 +53,8 @@ values
         "tilapia_ervas.png",
         42.9,
         "main_dishes",
-        "Pratos Principais"
+        "Pratos Principais",
+        1
     ),
     (
         "Escondidinho de Carne Seca",
@@ -49,7 +62,8 @@ values
         "escondidinho_carne_seca.png",
         34.9,
         "main_dishes",
-        "Pratos Principais"
+        "Pratos Principais",
+        1
     ),
     -- drinks
     (
@@ -58,7 +72,8 @@ values
         "suco_abacaxi_hortela.png",
         10.9,
         "drinks",
-        "Bebidas"
+        "Bebidas",
+        1
     ),
     (
         "Suco Detox Verde",
@@ -66,7 +81,8 @@ values
         "suco_detox_verde.png",
         12.9,
         "drinks",
-        "Bebidas"
+        "Bebidas",
+        1
     ),
     (
         "Suco de Manga",
@@ -74,5 +90,6 @@ values
         "suco_manga.png",
         9.9,
         "drinks",
-        "Bebidas"
+        "Bebidas",
+        1
     );

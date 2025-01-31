@@ -8,7 +8,7 @@ class DishesController {
 
     async get(request, response) {
         const responseData = {}
-        const dishes = await knex("dishes")
+        const dishes = await knex("dishes").where("enabled", 1)
 
         dishes.forEach(dish => {
             const data = {
@@ -51,6 +51,17 @@ class DishesController {
         }
 
         response.status(201).end()
+    }
+
+    async delete(request, response) {
+        const { id } = request.params
+
+        knex("dishes").update("enabled", false).where("id", id).then(rows => {
+            if (!rows){
+                return response.status(404).json({success:false});
+            }
+            return response.status(204).end();
+        })
     }
 }
 
