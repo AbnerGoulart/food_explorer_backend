@@ -2,11 +2,32 @@ const knex = require("../database/knex")
 
 class DishesController {
 
-    constructor() {
+    async show(request, response) {
+        let tags = []
+        const id = request.params.id;
+        const dish = await knex("dishes").where("id", id).first()
+        if (dish) {
+        tags = await knex.from("tags").where("dish_id", id)
+        }
 
+        if (!dish) {
+        return response.status(404).json({ error: "Dish not found" });
+        }
+
+        const data = {
+        id: dish.id, 
+        title: dish.title, 
+        description: dish.description,
+        section: dish.section,
+        photo: dish.photo, 
+        price: dish.price,
+        tags: tags.map(tag => tag.name)
+        }
+
+        response.status(200).json(data);
     }
 
-    async get(request, response) {
+    async get(_, response) {
         const responseData = {}
         const dishes = await knex("dishes").where("enabled", 1)
 
@@ -35,10 +56,8 @@ class DishesController {
     async create(request, response) {
         const { title, section, description, photo, price } = request.body
 
-        console.log(description)
-
         try {
-            const response = await knex("dishes").insert({
+            await knex("dishes").insert({
                 title,
                 section,
                 description,

@@ -93,3 +93,58 @@ values
         "Bebidas",
         1
     );
+
+INSERT INTO tags (name, dish_id)
+SELECT 'Frango', id FROM dishes WHERE title = 'Strogonoff de Frango'
+UNION ALL
+SELECT 'Creme de Leite', id FROM dishes WHERE title = 'Strogonoff de Frango'
+UNION ALL
+SELECT 'Batata Palha', id FROM dishes WHERE title = 'Strogonoff de Frango'
+UNION ALL
+SELECT 'Carne Moída', id FROM dishes WHERE title = 'Panqueca de Carne'
+UNION ALL
+SELECT 'Queijo', id FROM dishes WHERE title = 'Panqueca de Carne'
+UNION ALL
+SELECT 'Molho de Tomate', id FROM dishes WHERE title = 'Panqueca de Carne'
+UNION ALL
+SELECT 'Camarão', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+UNION ALL
+SELECT 'Alho', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+UNION ALL
+SELECT 'Azeite de Oliva', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+UNION ALL
+SELECT 'Picanha', id FROM dishes WHERE title = 'Picanha Grelhada'
+UNION ALL
+SELECT 'Farofa', id FROM dishes WHERE title = 'Picanha Grelhada'
+UNION ALL
+SELECT 'Vinagrete', id FROM dishes WHERE title = 'Picanha Grelhada'
+UNION ALL
+SELECT 'Tilápia', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+UNION ALL
+SELECT 'Molho de Ervas', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+UNION ALL
+SELECT 'Legumes', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+UNION ALL
+SELECT 'Carne Seca', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+UNION ALL
+SELECT 'Purê de Mandioca', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+UNION ALL
+SELECT 'Queijo Gratinado', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+UNION ALL
+SELECT 'Abacaxi', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+UNION ALL
+SELECT 'Hortelã', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+UNION ALL
+SELECT 'Refrescante', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+UNION ALL
+SELECT 'Couve', id FROM dishes WHERE title = 'Suco Detox Verde'
+UNION ALL
+SELECT 'Gengibre', id FROM dishes WHERE title = 'Suco Detox Verde'
+UNION ALL
+SELECT 'Limão', id FROM dishes WHERE title = 'Suco Detox Verde'
+UNION ALL
+SELECT 'Manga', id FROM dishes WHERE title = 'Suco de Manga'
+UNION ALL
+SELECT 'Doce', id FROM dishes WHERE title = 'Suco de Manga'
+UNION ALL
+SELECT 'Tropical', id FROM dishes WHERE title = 'Suco de Manga';

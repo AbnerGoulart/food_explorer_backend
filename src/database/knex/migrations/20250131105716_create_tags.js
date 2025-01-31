@@ -2,12 +2,10 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = knex => knex.schema.createTable("users", table => {
+exports.up = knex => knex.schema.createTable("tags", table => {
   table.increments("id").notNullable();
   table.text("name").notNullable();
-  table.text("email").notNullable();
-  table.text("type").notNullable();
-  table.text("password").notNullable();
+  table.integer("dish_id").notNullable();
   table.timestamp("created_at").default(knex.fn.now());
   table.timestamp("updated_at").default(knex.fn.now());
 });
@@ -16,4 +14,4 @@ exports.up = knex => knex.schema.createTable("users", table => {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = knex => knex.schema.dropTable("users");
+exports.down = knex => knex.schema.dropTable("tags");
