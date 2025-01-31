@@ -1,13 +1,31 @@
+const knex = require("../database/knex")
+const { compare } = require("bcryptjs")
+const authConfig = require("../config/auth")
+const { sign } = require("jsonwebtoken")
+
 class SessionController {
   async create (request, response) {
-    console.log(request)
-    if(request.body.email === "client@email.com" && request.body.password === "123456"){
-      return response.status(200).json({user: "Abner", token: "apsodksfgk", type:"client"})
-    } else if(request.body.email === "admin@email.com" && request.body.password === "123456"){
-      return response.status(200).json({user:"Admin", token:"oiwer89h", type:"admin"})
-    } else {
-      return response.status(500).json({message: "Usuário não autenticado"})
+    const { email, password } = request.body
+    const user = await knex("users").where({email}).first()
+
+    if(!user) {
+      response.status(500).json({message: "Email e/ou senha incorreta"})
+      return
     }
+
+    const passwordMatched = await compare(password, user.password)
+    if(!passwordMatched) {
+      response.status(500).json({message: "Email e/ou senha incorreta"})
+      return
+    }
+
+    const { secret, expiresIn } = authConfig.jwt
+    const token = sign({}, secret, {
+      subject: JSON.stringify({user_id: user.id, type: user.type}),
+      expiresIn
+    })
+
+    response.status(200).json({user: user.name, token, type: user.type})
   }
 }
 
