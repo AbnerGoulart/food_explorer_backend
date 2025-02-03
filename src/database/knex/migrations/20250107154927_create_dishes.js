@@ -3,14 +3,14 @@
  * @returns { Promise<void> }
  */
 exports.up = knex => knex.schema.createTable("dishes", table => {
-  table.increments("id");
-  table.text("title");
-  table.boolean("enabled");
-  table.text("description");
+  table.increments("id").notNullable();
+  table.text("title").notNullable();
+  table.boolean("enabled").notNullable();
+  table.text("description").notNullable();
   table.text("photo");
-  table.float("price");
-  table.text("section");
-  table.text("section_title");
+  table.float("price").notNullable();
+  table.text("section").notNullable();
+  table.text("section_title").notNullable();
 
   table.timestamp("created_at").default(knex.fn.now());
   table.timestamp("updated_at").default(knex.fn.now());

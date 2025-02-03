@@ -1,12 +1,34 @@
 const knex = require("../database/knex")
+const DiskStorage = require("../providers/DiskStorage")
 
 class DishesController {
 
-    constructor() {
+    async show(request, response) {
+        let tags = []
+        const id = request.params.id;
+        const dish = await knex("dishes").where("id", id).first()
+        if (dish) {
+        tags = await knex.from("tags").where("dish_id", id)
+        }
 
+        if (!dish) {
+        return response.status(404).json({ error: "Dish not found" });
+        }
+
+        const data = {
+        id: dish.id, 
+        title: dish.title, 
+        description: dish.description,
+        section: dish.section,
+        photo: dish.photo, 
+        price: dish.price,
+        tags: tags.map(tag => tag.name)
+        }
+
+        response.status(200).json(data);
     }
 
-    async get(request, response) {
+    async get(_, response) {
         const responseData = {}
         const dishes = await knex("dishes").where("enabled", 1)
 
@@ -33,17 +55,20 @@ class DishesController {
     }
 
     async create(request, response) {
-        const { title, section, description, photo, price } = request.body
-
-        console.log(description)
+        const { title, section, description, price } = request.body
+        const photoFileName = request.file.filename
+        const diskStorage = new DiskStorage()
+        const photo = await diskStorage.saveFile(photoFileName)
 
         try {
-            const response = await knex("dishes").insert({
+            await knex("dishes").insert({
                 title,
                 section,
+                section_title: "Pratos Principais",
                 description,
                 photo,
-                price
+                price,
+                enabled: true
             })
         } catch (error) {
             console.log(error)
@@ -63,6 +88,14 @@ class DishesController {
             return response.status(204).end();
         })
     }
+
+    // async savePhoto(request, response) {
+    //     const photoFileName = request.file.filename
+    //     const diskStorage = new DiskStorage()
+    //     const photo = await diskStorage.saveFile(photoFileName)
+
+    //     response.status(200).json({photo})
+    // }
 }
 
 module.exports = DishesController

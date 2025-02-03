@@ -1,24 +1,24 @@
 const { Router } = require('express')
-const DetailsController = require('../controllers/DetailsController')
+const uploadConfig = require("../config/upload")
+const multer = require("multer")
+
 const DishesController = require("../controllers/DishesController")
 const SessionController = require("../controllers/SessionController")
 const UsersController = require('../controllers/UsersController')
 const UserRepository = require('../repositories/UserRepository')
 const UserCreateService = require('../services/UserCreateService')
-
 const routes = Router()
-
+const upload = multer(uploadConfig.MULTER)
 const dishesController = new DishesController()
-const detailsController = new DetailsController()
 const sessionController = new SessionController()
-
 const userRepository = new UserRepository()
 const userCreateService = new UserCreateService(userRepository)
 const usersController = new UsersController(userCreateService)
 
 routes.get('/dishes', dishesController.get)
-routes.post('/dishes', dishesController.create)
-routes.get('/dishes/details/:id', detailsController.get)
+routes.post('/dishes', upload.single("photo"), dishesController.create)
+// routes.post('/dishes/photo', upload.single("photo"), dishesController.savePhoto)
+routes.get('/dishes/:id', dishesController.show)
 routes.delete('/dishes/:id', dishesController.delete)
 routes.post('/session', sessionController.create)
 routes.post('/register', (req, res) => usersController.create(req, res))
