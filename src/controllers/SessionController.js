@@ -25,7 +25,7 @@ class SessionController {
       expiresIn
     })
 
-    response.status(200).json({user: user.name, token, type: user.type})
+    response.status(200).json({token})
   }
 }
 
