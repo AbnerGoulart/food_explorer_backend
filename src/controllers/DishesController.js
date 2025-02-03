@@ -1,4 +1,5 @@
 const knex = require("../database/knex")
+const DiskStorage = require("../providers/DiskStorage")
 
 class DishesController {
 
@@ -54,15 +55,20 @@ class DishesController {
     }
 
     async create(request, response) {
-        const { title, section, description, photo, price } = request.body
+        const { title, section, description, price } = request.body
+        const photoFileName = request.file.filename
+        const diskStorage = new DiskStorage()
+        const photo = await diskStorage.saveFile(photoFileName)
 
         try {
             await knex("dishes").insert({
                 title,
                 section,
+                section_title: "Pratos Principais",
                 description,
                 photo,
-                price
+                price,
+                enabled: true
             })
         } catch (error) {
             console.log(error)
@@ -82,6 +88,14 @@ class DishesController {
             return response.status(204).end();
         })
     }
+
+    // async savePhoto(request, response) {
+    //     const photoFileName = request.file.filename
+    //     const diskStorage = new DiskStorage()
+    //     const photo = await diskStorage.saveFile(photoFileName)
+
+    //     response.status(200).json({photo})
+    // }
 }
 
 module.exports = DishesController
