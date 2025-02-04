@@ -1,5 +1,3 @@
-const UserCreateService = require("../services/UserCreateService")
-
 class UsersController {
     constructor(userCreateService) {
         this.userCreateService = userCreateService
@@ -11,7 +9,7 @@ class UsersController {
         try {
             await this.userCreateService.execute({name, email, password})
         } catch (error) {
-            response.status(500).json({error: "vasco da gama"})
+            response.status(500).json({error: "Algo errado aconteceu. Por favor, tente novamente mais tarde."})
         }
 
         return response.status(201).end()
