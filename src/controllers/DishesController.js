@@ -80,30 +80,28 @@ class DishesController {
 
     async update(request, response) {
         const { id } = request.params
-        const { title, section, description, price } = request.body
+        const { title, section, description, price, tags } = request.body
         const photoFileName = request.file ? request.file.filename : null
 
         const dish = await knex("dishes").where("id", id).first()
         if (!dish) {
-            console.log("não é prato")
             return response.status(404).json({ error: "Dish not found" })
         }
         
-        title, section, description, price
         const updatedDish = {}
-        if (title != dish.title) {
+        if (title && title != dish.title) {
             updatedDish.title = title
         }
 
-        if (section != dish.section) {
+        if (section && section != dish.section) {
             updatedDish.section = section
         }
 
-        if (description != dish.description) {
+        if (description && description != dish.description) {
             updatedDish.description = description
         }
 
-        if (price != dish.price) {
+        if (price && price != dish.price) {
             updatedDish.price = price
         }
 
@@ -113,7 +111,18 @@ class DishesController {
             updatedDish.photo = photo
         }
 
-        await knex("dishes").where("id", id).update(updatedDish)
+        if (tags) {
+            await knex("tags").where("dish_id", id).delete()
+
+            const newTags = tags.map(tag => {
+                return { name: tag, dish_id: id}
+            })
+            await knex("tags").insert(newTags)
+        }
+
+        if (Object.keys(updatedDish).length > 0) {
+            await knex("dishes").where("id", id).update(updatedDish)
+        }
 
         return response.status(204).end()
     }
