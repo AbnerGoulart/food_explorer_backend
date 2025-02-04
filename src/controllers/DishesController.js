@@ -1,5 +1,6 @@
 const knex = require("../database/knex")
-const DiskStorage = require("../providers/DiskStorage")
+const DiskStorage = require("../providers/DiskStorage");
+const AppError = require("../utils/AppError");
 
 class DishesController {
 
@@ -75,6 +76,54 @@ class DishesController {
         }
 
         response.status(201).end()
+    }
+
+    async update(request, response) {
+        const { id } = request.params
+        const { title, section, description, price, tags } = request.body
+        const photoFileName = request.file ? request.file.filename : null
+
+        const dish = await knex("dishes").where("id", id).first()
+        if (!dish) {
+            return response.status(404).json({ error: "Dish not found" })
+        }
+        
+        const updatedDish = {}
+        if (title && title != dish.title) {
+            updatedDish.title = title
+        }
+
+        if (section && section != dish.section) {
+            updatedDish.section = section
+        }
+
+        if (description && description != dish.description) {
+            updatedDish.description = description
+        }
+
+        if (price && price != dish.price) {
+            updatedDish.price = price
+        }
+
+        if (photoFileName) {
+            const diskStorage = new DiskStorage()
+            const photo = await diskStorage.saveFile(photoFileName)
+            updatedDish.photo = photo
+        }
+
+        await knex("tags").where("dish_id", id).delete()
+        if (tags) {
+            const newTags = tags.map(tag => {
+                return { name: tag, dish_id: id}
+            })
+            await knex("tags").insert(newTags)
+        }
+
+        if (Object.keys(updatedDish).length > 0) {
+            await knex("dishes").where("id", id).update(updatedDish)
+        }
+
+        return response.status(204).end()
     }
 
     async delete(request, response) {
