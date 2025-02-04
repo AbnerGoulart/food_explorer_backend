@@ -3,32 +3,32 @@ const DiskStorage = require("../providers/DiskStorage")
 
 class DishesController {
 
-    async show(request, response) {
+    async get(request, response) {
         let tags = []
         const id = request.params.id;
         const dish = await knex("dishes").where("id", id).first()
         if (dish) {
-        tags = await knex.from("tags").where("dish_id", id)
+            tags = await knex.from("tags").where("dish_id", id)
         }
 
         if (!dish) {
-        return response.status(404).json({ error: "Dish not found" });
+            return response.status(404).json({ error: "Dish not found" });
         }
 
         const data = {
-        id: dish.id, 
-        title: dish.title, 
-        description: dish.description,
-        section: dish.section,
-        photo: dish.photo, 
-        price: dish.price,
-        tags: tags.map(tag => tag.name)
+            id: dish.id,
+            title: dish.title,
+            description: dish.description,
+            section: dish.section,
+            photo: dish.photo,
+            price: dish.price,
+            tags: tags.map(tag => tag.name)
         }
 
         response.status(200).json(data);
     }
 
-    async get(_, response) {
+    async show(request, response) {
         const responseData = {}
         const dishes = await knex("dishes").where("enabled", 1)
 
@@ -41,12 +41,12 @@ class DishesController {
                 id: dish.id
             }
 
-            if (responseData[dish.section] != undefined) {  
+            if (responseData[dish.section] != undefined) {
                 responseData[dish.section]["data"].push(data)
             } else {
                 responseData[dish.section] = {
-                  title: dish.section_title,
-                  data: [data] 
+                    title: dish.section_title,
+                    data: [data]
                 }
             }
         })
@@ -71,8 +71,7 @@ class DishesController {
                 enabled: true
             })
         } catch (error) {
-            console.log(error)
-            response.status(500).json({error: "something unexpected happened! Try again later."})
+            response.status(500).json({ error: "something unexpected happened! Try again later." })
         }
 
         response.status(201).end()
@@ -82,20 +81,12 @@ class DishesController {
         const { id } = request.params
 
         knex("dishes").update("enabled", false).where("id", id).then(rows => {
-            if (!rows){
-                return response.status(404).json({success:false});
+            if (!rows) {
+                return response.status(404).json({ success: false });
             }
             return response.status(204).end();
         })
     }
-
-    // async savePhoto(request, response) {
-    //     const photoFileName = request.file.filename
-    //     const diskStorage = new DiskStorage()
-    //     const photo = await diskStorage.saveFile(photoFileName)
-
-    //     response.status(200).json({photo})
-    // }
 }
 
 module.exports = DishesController
