@@ -22,6 +22,7 @@ routes.post('/register', (req, res) => usersController.create(req, res))
 routes.get('/dishes', ensureAuthenticated, dishesController.show)
 routes.get('/dishes/:id', ensureAuthenticated, dishesController.get)
 routes.post('/dishes', ensureAuthenticated, ensureIsAdmin, upload.single("photo"), dishesController.create)
+routes.put('/dishes/:id', ensureAuthenticated, ensureIsAdmin, upload.single("photo"), dishesController.update)
 routes.delete('/dishes/:id', ensureAuthenticated, ensureIsAdmin, dishesController.delete)
 
 module.exports = routes
