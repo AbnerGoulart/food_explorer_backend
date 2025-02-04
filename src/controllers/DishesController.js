@@ -111,9 +111,8 @@ class DishesController {
             updatedDish.photo = photo
         }
 
+        await knex("tags").where("dish_id", id).delete()
         if (tags) {
-            await knex("tags").where("dish_id", id).delete()
-
             const newTags = tags.map(tag => {
                 return { name: tag, dish_id: id}
             })
