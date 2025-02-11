@@ -1,9 +1,7 @@
 const knex = require("../database/knex")
 const DiskStorage = require("../providers/DiskStorage");
-const AppError = require("../utils/AppError");
 
 class DishesController {
-
     async get(request, response) {
         let tags = []
         const id = request.params.id;
@@ -46,13 +44,18 @@ class DishesController {
                 responseData[dish.section]["data"].push(data)
             } else {
                 responseData[dish.section] = {
-                    title: dish.section_title,
+                    title: dish.section,
                     data: [data]
                 }
             }
         })
 
-        response.status(200).json(responseData)
+        const dishesArr = []
+        Object.keys(responseData).forEach((key, index) => {
+            dishesArr.push(responseData[key]) 
+        })
+
+        response.status(200).json(dishesArr)
     }
 
     async create(request, response) {

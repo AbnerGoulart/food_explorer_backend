@@ -1,150 +1,182 @@
-insert into
+    insert into
     dishes (
         title,
         description,
         photo,
         price,
         section,
-        section_title,
         enabled
     )
 values
     -- Meals
     (
-        'Strogonoff de Frango',
-        'Frango em cubos cozido em um molho cremoso de creme de leite, ketchup e mostarda, acompanhado de batata palha e arroz branco.',
-        'strogonoff_frango.png',
-        32.9,
-        'meals',
+        'Salada Ravanello',
+        'Rabanetes, folhas verdes e molho adridoce salpicados com gergelim.',
+        'salada-ravanello.png',
+        49.97,
         'Refeições',
         1
     ),
     (
-        'Panqueca de Carne',
-        'Panquecas macias recheadas com carne moída temperada e cobertas com molho de tomate caseiro e queijo gratinado.',
-        'panqueca_carne.png',
-        27.9,
-        'meals',
+        'Spaguetti Gambe',
+        'Massa fresca com camarões e pesto.',
+        'spaguetti-gambe.png',
+        79.97,
         'Refeições',
         1
     ),
     (
-        'Camarão ao Alho e Óleo',
-        'Camarões salteados no azeite de oliva com alho dourado, ervas frescas e um toque de pimenta. Simples e delicioso.',
-        'camarao_alho_oleo.png',
-        39.9,
-        'meals',
+        'Torradas de Parma',
+        'Presunto de parma e rúcula em um pão com fermentação natural.',
+        'torradas-de-parma.png',
+        25.97,
         'Refeições',
         1
     ),
-    -- Main Dishes
     (
-        'Picanha Grelhada',
-        'Corte suculento de picanha grelhada na brasa, servido com farofa, arroz branco e vinagrete.',
-        'picanha_grelhada.png',
-        59.9,
-        'main_dishes',
-        'Pratos Principais',
+        'Salada Molla',
+        'Massa fresca com camarões e pesto.',
+        'salada-molla.png',
+        79.97,
+        'Refeições',
+        1
+    ),
+    -- Desserts
+    (
+        'Prugna Pie',
+        'Torta de ameixa com massa amanteigada, polvilho em açúcar.',
+        'prugna-pie.png',
+        79.97,
+        'Sobremesas',
         1
     ),
     (
-        'Tilápia ao Molho de Ervas',
-        'Filé de tilápia grelhado e regado com um delicado molho de ervas frescas, acompanhado de legumes salteados.',
-        'tilapia_ervas.png',
-        42.9,
-        'main_dishes',
-        'Pratos Principais',
+        'Peachy pastrie',
+        'Delicioso folheado de pêssego com folhas de hortelã.',
+        'peachy-pastrie.png',
+        32.97,
+        'Sobremesas',
         1
     ),
     (
-        'Escondidinho de Carne Seca',
-        'Delicioso escondidinho de carne seca desfiada, coberto com um purê de mandioca cremoso e queijo gratinado.',
-        'escondidinho_carne_seca.png',
-        34.9,
-        'main_dishes',
-        'Pratos Principais',
+        'Macarons',
+        'Farinha de amêndoas, manteiga, claras e açúcar.',
+        'macarons.png',
+        79.97,
+        'Sobremesas',
         1
     ),
-    -- drinks
     (
-        'Suco de Abacaxi com Hortelã',
-        'Refrescante combinação de abacaxi natural com o toque aromático de hortelã. Ideal para acompanhar qualquer refeição.',
-        'suco_abacaxi_hortela.png',
-        10.9,
-        'drinks',
+        'Bolo de damasco',
+        'Damascos frescos em uma massa sem glúten.',
+        'bolo-de-damasco.png',
+        19.97,
+        'Sobremesas',
+        1
+    ),
+    -- Drinks
+    (
+        'Espresso',
+        'Café cremoso feito na temperatura e pressões perfeitas.',
+        'espresso.png',
+        15.97,
         'Bebidas',
         1
     ),
     (
-        'Suco Detox Verde',
-        'Mistura saudável de couve, maçã, limão e gengibre, perfeita para revitalizar o seu dia.',
-        'suco_detox_verde.png',
-        12.9,
-        'drinks',
+        'Suco de maracujá',
+        'Suco de maracujá gelado, cremoso, docinho.',
+        'suco-de-maracuja.png',
+        13.97,
         'Bebidas',
         1
     ),
     (
-        'Suco de Manga',
-        'Suco doce e cremoso de manga, feito com frutas selecionadas. Um clássico tropical que agrada a todos.',
-        'suco_manga.png',
-        9.9,
-        'drinks',
+        'Tè d''autunno',
+        'Chá de anis, canela e limão. Sinta o outono italiano.',
+        'te-dautunno.png',
+        19.97,
+        'Bebidas',
+        1
+    ),
+    (
+        'Pomo bourbon',
+        'Maçã, whisky, canela. On the rocks.',
+        'pomo-bourbon.png',
+        79.97,
         'Bebidas',
         1
     );
 
 INSERT INTO tags (name, dish_id)
-SELECT 'Frango', id FROM dishes WHERE title = 'Strogonoff de Frango'
+SELECT 'Salada', id FROM dishes WHERE title = 'Salada Ravanello'
 UNION ALL
-SELECT 'Creme de Leite', id FROM dishes WHERE title = 'Strogonoff de Frango'
+SELECT 'Vegano', id FROM dishes WHERE title = 'Salada Ravanello'
 UNION ALL
-SELECT 'Batata Palha', id FROM dishes WHERE title = 'Strogonoff de Frango'
+SELECT 'Fresco', id FROM dishes WHERE title = 'Salada Ravanello'
 UNION ALL
-SELECT 'Carne Moída', id FROM dishes WHERE title = 'Panqueca de Carne'
+SELECT 'Massa', id FROM dishes WHERE title = 'Spaguetti Gambe'
 UNION ALL
-SELECT 'Queijo', id FROM dishes WHERE title = 'Panqueca de Carne'
+SELECT 'Camarão', id FROM dishes WHERE title = 'Spaguetti Gambe'
 UNION ALL
-SELECT 'Molho de Tomate', id FROM dishes WHERE title = 'Panqueca de Carne'
+SELECT 'Pesto', id FROM dishes WHERE title = 'Spaguetti Gambe'
 UNION ALL
-SELECT 'Camarão', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+SELECT 'Presunto Parma', id FROM dishes WHERE title = 'Torradas de Parma'
 UNION ALL
-SELECT 'Alho', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+SELECT 'Rúcula', id FROM dishes WHERE title = 'Torradas de Parma'
 UNION ALL
-SELECT 'Azeite de Oliva', id FROM dishes WHERE title = 'Camarão ao Alho e Óleo'
+SELECT 'Artesanal', id FROM dishes WHERE title = 'Torradas de Parma'
 UNION ALL
-SELECT 'Picanha', id FROM dishes WHERE title = 'Picanha Grelhada'
+SELECT 'Salada', id FROM dishes WHERE title = 'Salada Molla'
 UNION ALL
-SELECT 'Farofa', id FROM dishes WHERE title = 'Picanha Grelhada'
+SELECT 'Camarão', id FROM dishes WHERE title = 'Salada Molla'
 UNION ALL
-SELECT 'Vinagrete', id FROM dishes WHERE title = 'Picanha Grelhada'
+SELECT 'Pesto', id FROM dishes WHERE title = 'Salada Molla'
 UNION ALL
-SELECT 'Tilápia', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+SELECT 'Torta', id FROM dishes WHERE title = 'Prugna Pie'
 UNION ALL
-SELECT 'Molho de Ervas', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+SELECT 'Ameixa', id FROM dishes WHERE title = 'Prugna Pie'
 UNION ALL
-SELECT 'Legumes', id FROM dishes WHERE title = 'Tilápia ao Molho de Ervas'
+SELECT 'Doce', id FROM dishes WHERE title = 'Prugna Pie'
 UNION ALL
-SELECT 'Carne Seca', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+SELECT 'Folheado', id FROM dishes WHERE title = 'Peachy pastrie'
 UNION ALL
-SELECT 'Purê de Mandioca', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+SELECT 'Pêssego', id FROM dishes WHERE title = 'Peachy pastrie'
 UNION ALL
-SELECT 'Queijo Gratinado', id FROM dishes WHERE title = 'Escondidinho de Carne Seca'
+SELECT 'Hortelã', id FROM dishes WHERE title = 'Peachy pastrie'
 UNION ALL
-SELECT 'Abacaxi', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+SELECT 'Doce', id FROM dishes WHERE title = 'Macarons'
 UNION ALL
-SELECT 'Hortelã', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+SELECT 'Amêndoas', id FROM dishes WHERE title = 'Macarons'
 UNION ALL
-SELECT 'Refrescante', id FROM dishes WHERE title = 'Suco de Abacaxi com Hortelã'
+SELECT 'Gourmet', id FROM dishes WHERE title = 'Macarons'
 UNION ALL
-SELECT 'Couve', id FROM dishes WHERE title = 'Suco Detox Verde'
+SELECT 'Bolo', id FROM dishes WHERE title = 'Bolo de damasco'
 UNION ALL
-SELECT 'Gengibre', id FROM dishes WHERE title = 'Suco Detox Verde'
+SELECT 'Damasco', id FROM dishes WHERE title = 'Bolo de damasco'
 UNION ALL
-SELECT 'Limão', id FROM dishes WHERE title = 'Suco Detox Verde'
+SELECT 'Sem Glúten', id FROM dishes WHERE title = 'Bolo de damasco'
 UNION ALL
-SELECT 'Manga', id FROM dishes WHERE title = 'Suco de Manga'
+SELECT 'Café', id FROM dishes WHERE title = 'Espresso'
 UNION ALL
-SELECT 'Doce', id FROM dishes WHERE title = 'Suco de Manga'
+SELECT 'Cremoso', id FROM dishes WHERE title = 'Espresso'
 UNION ALL
-SELECT 'Tropical', id FROM dishes WHERE title = 'Suco de Manga';
+SELECT 'Intenso', id FROM dishes WHERE title = 'Espresso'
+UNION ALL
+SELECT 'Suco', id FROM dishes WHERE title = 'Suco de maracujá'
+UNION ALL
+SELECT 'Maracujá', id FROM dishes WHERE title = 'Suco de maracujá'
+UNION ALL
+SELECT 'Doce', id FROM dishes WHERE title = 'Suco de maracujá'
+UNION ALL
+SELECT 'Chá', id FROM dishes WHERE title = 'Tè d''autunno'
+UNION ALL
+SELECT 'Anis', id FROM dishes WHERE title = 'Tè d''autunno'
+UNION ALL
+SELECT 'Canela', id FROM dishes WHERE title = 'Tè d''autunno'
+UNION ALL
+SELECT 'Whisky', id FROM dishes WHERE title = 'Pomo bourbon'
+UNION ALL
+SELECT 'Maçã', id FROM dishes WHERE title = 'Pomo bourbon'
+UNION ALL
+SELECT 'Canela', id FROM dishes WHERE title = 'Pomo bourbon';
