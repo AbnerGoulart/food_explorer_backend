@@ -5,7 +5,11 @@ class DishesController {
     async get(request, response) {
         let tags = []
         const id = request.params.id;
-        const dish = await knex("dishes").where("id", id).first()
+        const dish = await knex("dishes")
+                            .where("dishes.id", id)
+                            .join("sections", "dishes.section_id", "sections.id")
+                            .select("dishes.*", "sections.name as section")
+                            .first()
         if (dish) {
             tags = await knex.from("tags").where("dish_id", id)
         }
