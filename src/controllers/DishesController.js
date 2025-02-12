@@ -37,7 +37,6 @@ class DishesController {
                                 .where("enabled", 1)
                                 .join("sections", "dishes.section_id", "sections.id")
                                 .select("dishes.*", "sections.label as section_label")
-        console.log(dishes)
 
         dishes.forEach(dish => {
             const data = {
@@ -67,7 +66,7 @@ class DishesController {
     }
 
     async create(request, response) {
-        const { title, section, description, price } = request.body
+        const { title, section, description, price, tags } = request.body
         const photoFileName = request.file.filename
         const diskStorage = new DiskStorage()
         const photo = await diskStorage.saveFile(photoFileName)
@@ -79,7 +78,7 @@ class DishesController {
         }
 
         try {
-            await knex("dishes").insert({
+            const dish = await knex("dishes").insert({
                 title,
                 section_id: dishSection.id,
                 description,
@@ -87,7 +86,14 @@ class DishesController {
                 price,
                 enabled: true
             })
+
+            if (tags) {
+                const tagsArr = tags.split(",")
+                const newTags = tagsArr.map(tag => ({dish_id: dish[0], name: tag}))
+                await knex("tags").insert(newTags)
+            }
         } catch (error) {
+            console.log(error)
             response.status(500).json({ error: "Algo inesperado aconteceu! Tente novamente mais tarde." })
         }
 
