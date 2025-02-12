@@ -72,8 +72,8 @@ class DishesController {
         const diskStorage = new DiskStorage()
         const photo = await diskStorage.saveFile(photoFileName)
 
-        sectionId = await knex('sections').where('label', section).select('id').first()
-        if (!sectionId) {
+        const dishSection = await knex('sections').where('name', section).select('id').first()
+        if (!dishSection) {
             response.status(404).json({error: "Seção não encontrada"})
             return
         }
@@ -81,7 +81,7 @@ class DishesController {
         try {
             await knex("dishes").insert({
                 title,
-                section_id: sectionId,
+                section_id: dishSection.id,
                 description,
                 photo,
                 price,
