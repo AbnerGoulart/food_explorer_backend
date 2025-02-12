@@ -145,7 +145,8 @@ class DishesController {
 
         await knex("tags").where("dish_id", id).delete()
         if (tags) {
-            const newTags = tags.map(tag => {
+            const tagsArr = tags.split(",")
+            const newTags = tagsArr.map(tag => {
                 return { name: tag, dish_id: id}
             })
             await knex("tags").insert(newTags)
