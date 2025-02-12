@@ -9,7 +9,7 @@ exports.up = knex => knex.schema.createTable("dishes", table => {
   table.text("description").notNullable();
   table.text("photo");
   table.float("price").notNullable();
-  table.text("section").notNullable();
+  table.bigint("section_id").notNullable();
 
   table.timestamp("created_at").default(knex.fn.now());
   table.timestamp("updated_at").default(knex.fn.now());

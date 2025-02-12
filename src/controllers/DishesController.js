@@ -5,13 +5,17 @@ class DishesController {
     async get(request, response) {
         let tags = []
         const id = request.params.id;
-        const dish = await knex("dishes").where("id", id).first()
+        const dish = await knex("dishes")
+                            .where("dishes.id", id)
+                            .join("sections", "dishes.section_id", "sections.id")
+                            .select("dishes.*", "sections.name as section")
+                            .first()
         if (dish) {
             tags = await knex.from("tags").where("dish_id", id)
         }
 
         if (!dish) {
-            return response.status(404).json({ error: "Dish not found" });
+            return response.status(404).json({ error: "Prato não encontrado" });
         }
 
         const data = {
@@ -29,7 +33,11 @@ class DishesController {
 
     async show(request, response) {
         const responseData = {}
-        const dishes = await knex("dishes").where("enabled", 1)
+        const dishes = await knex("dishes")
+                                .where("enabled", 1)
+                                .join("sections", "dishes.section_id", "sections.id")
+                                .select("dishes.*", "sections.label as section_label")
+        console.log(dishes)
 
         dishes.forEach(dish => {
             const data = {
@@ -40,11 +48,11 @@ class DishesController {
                 id: dish.id
             }
 
-            if (responseData[dish.section] != undefined) {
-                responseData[dish.section]["data"].push(data)
+            if (responseData[dish.section_label] != undefined) {
+                responseData[dish.section_label]["data"].push(data)
             } else {
-                responseData[dish.section] = {
-                    title: dish.section,
+                responseData[dish.section_label] = {
+                    title: dish.section_label,
                     data: [data]
                 }
             }
@@ -64,18 +72,23 @@ class DishesController {
         const diskStorage = new DiskStorage()
         const photo = await diskStorage.saveFile(photoFileName)
 
+        sectionId = await knex('sections').where('label', section).select('id').first()
+        if (!sectionId) {
+            response.status(404).json({error: "Seção não encontrada"})
+            return
+        }
+
         try {
             await knex("dishes").insert({
                 title,
-                section,
-                section_title: "Pratos Principais",
+                section_id: sectionId,
                 description,
                 photo,
                 price,
                 enabled: true
             })
         } catch (error) {
-            response.status(500).json({ error: "something unexpected happened! Try again later." })
+            response.status(500).json({ error: "Algo inesperado aconteceu! Tente novamente mais tarde." })
         }
 
         response.status(201).end()
@@ -86,9 +99,14 @@ class DishesController {
         const { title, section, description, price, tags } = request.body
         const photoFileName = request.file ? request.file.filename : null
 
-        const dish = await knex("dishes").where("id", id).first()
+        const dish = await knex("dishes")
+                            .where("dishes.id", id)
+                            .join("sections", "dishes.section_id", "sections.id")
+                            .select("dishes.*", "sections.name as section")
+                            .first()
         if (!dish) {
-            return response.status(404).json({ error: "Dish not found" })
+            response.status(404).json({ error: "Prato não encontrado" })
+            return
         }
         
         const updatedDish = {}
@@ -97,7 +115,12 @@ class DishesController {
         }
 
         if (section && section != dish.section) {
-            updatedDish.section = section
+            const sectionId = await knex('sections').select('id').where('name', section).first()
+            if (!sectionId) {
+                response.status(404).json({error: "Seção não encontrada"})
+                return
+            }
+            updatedDish.section_id = sectionId
         }
 
         if (description && description != dish.description) {

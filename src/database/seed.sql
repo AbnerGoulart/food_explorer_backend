@@ -1,10 +1,29 @@
-    insert into
+insert into
+    sections (
+        name,
+        label
+    )
+values
+    (
+        'meals',
+        'Refeições'
+    ),
+    (
+        'desserts',
+        'Sobremesas'
+    ),
+    (
+        'drinks',
+        'Bebidas'
+    );
+
+insert into
     dishes (
         title,
         description,
         photo,
         price,
-        section,
+        section_id,
         enabled
     )
 values
@@ -14,7 +33,7 @@ values
         'Rabanetes, folhas verdes e molho adridoce salpicados com gergelim.',
         'salada-ravanello.png',
         49.97,
-        'Refeições',
+        (select id from sections where label = 'Refeições' limit 1),
         1
     ),
     (
@@ -22,7 +41,7 @@ values
         'Massa fresca com camarões e pesto.',
         'spaguetti-gambe.png',
         79.97,
-        'Refeições',
+        (select id from sections where label = 'Refeições' limit 1),
         1
     ),
     (
@@ -30,7 +49,7 @@ values
         'Presunto de parma e rúcula em um pão com fermentação natural.',
         'torradas-de-parma.png',
         25.97,
-        'Refeições',
+        (select id from sections where label = 'Refeições' limit 1),
         1
     ),
     (
@@ -38,7 +57,7 @@ values
         'Massa fresca com camarões e pesto.',
         'salada-molla.png',
         79.97,
-        'Refeições',
+        (select id from sections where label = 'Refeições' limit 1),
         1
     ),
     -- Desserts
@@ -47,7 +66,7 @@ values
         'Torta de ameixa com massa amanteigada, polvilho em açúcar.',
         'prugna-pie.png',
         79.97,
-        'Sobremesas',
+        (select id from sections where label = 'Sobremesas' limit 1),
         1
     ),
     (
@@ -55,7 +74,7 @@ values
         'Delicioso folheado de pêssego com folhas de hortelã.',
         'peachy-pastrie.png',
         32.97,
-        'Sobremesas',
+        (select id from sections where label = 'Sobremesas' limit 1),
         1
     ),
     (
@@ -63,7 +82,7 @@ values
         'Farinha de amêndoas, manteiga, claras e açúcar.',
         'macarons.png',
         79.97,
-        'Sobremesas',
+        (select id from sections where label = 'Sobremesas' limit 1),
         1
     ),
     (
@@ -71,7 +90,7 @@ values
         'Damascos frescos em uma massa sem glúten.',
         'bolo-de-damasco.png',
         19.97,
-        'Sobremesas',
+        (select id from sections where label = 'Sobremesas' limit 1),
         1
     ),
     -- Drinks
@@ -80,7 +99,7 @@ values
         'Café cremoso feito na temperatura e pressões perfeitas.',
         'espresso.png',
         15.97,
-        'Bebidas',
+        (select id from sections where label = 'Bebidas' limit 1),
         1
     ),
     (
@@ -88,7 +107,7 @@ values
         'Suco de maracujá gelado, cremoso, docinho.',
         'suco-de-maracuja.png',
         13.97,
-        'Bebidas',
+        (select id from sections where label = 'Bebidas' limit 1),
         1
     ),
     (
@@ -96,7 +115,7 @@ values
         'Chá de anis, canela e limão. Sinta o outono italiano.',
         'te-dautunno.png',
         19.97,
-        'Bebidas',
+        (select id from sections where label = 'Bebidas' limit 1),
         1
     ),
     (
@@ -104,7 +123,7 @@ values
         'Maçã, whisky, canela. On the rocks.',
         'pomo-bourbon.png',
         79.97,
-        'Bebidas',
+        (select id from sections where label = 'Bebidas' limit 1),
         1
     );
 
