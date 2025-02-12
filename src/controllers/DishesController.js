@@ -33,10 +33,24 @@ class DishesController {
 
     async show(request, response) {
         const responseData = {}
-        const dishes = await knex("dishes")
-                                .where("enabled", 1)
-                                .join("sections", "dishes.section_id", "sections.id")
-                                .select("dishes.*", "sections.label as section_label")
+        let query
+        if (request.query.q) {
+            const searchTerm = request.query.q.toString().toLowerCase()
+            query = knex("dishes")
+                        .distinct("dishes.*", "sections.label as section_label")
+                        .join("sections", "dishes.section_id", "sections.id")
+                        .join("tags", "tags.dish_id", "dishes.id")
+                        .where(knex.raw('lower(dishes.title)'), 'like', `%${searchTerm}%`)
+                        .orWhere(knex.raw('lower(dishes.description)'), 'like', `%${searchTerm}%`)
+                        .orWhere(knex.raw('lower(tags.name)'), 'like', `%${searchTerm}%`)
+                        .andWhere("dishes.enabled", 1)
+        } else {
+            query = knex("dishes")
+                        .select("dishes.*", "sections.label as section_label")
+                        .join("sections", "dishes.section_id", "sections.id")
+                        .where("enabled", 1)
+        }
+        const dishes = await query
 
         dishes.forEach(dish => {
             const data = {
