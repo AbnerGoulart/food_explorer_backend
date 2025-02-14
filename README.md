@@ -1,6 +1,6 @@
 # Food Explorer Backend
 
-Frontend do desafio final da formação explorer da Rocketseat. A aplicação é um cardapio digital para um restaurante fictício e está implantanda no endereço: ``.
+API do desafio final da formação explorer da Rocketseat.
 
 ## Sumário
 - [Sobre a API](#sobre-a-api)
